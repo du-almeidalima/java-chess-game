@@ -5,13 +5,14 @@
 package app;
 
 import models.boardgame.Position;
+import models.chess.ChessMatch;
 
 public class App {
     public static void main(String[] args) throws Exception {
         // Variables
         Position pos;
 
-        pos = new Position(10, 5);
-        System.out.println(pos);
+        ChessMatch match = new ChessMatch();
+        UI.printBoard(match.getChessPiece());
     }
 }

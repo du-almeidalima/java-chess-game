@@ -5,7 +5,8 @@
             "name": "CodeLens (Launch) - App",
             "request": "launch",
             "mainClass": "app.App",
-            "projectName": "Chess Game System"
+            "projectName": "Chess Game System",
+            "console":"externalTerminal"
         }
     ]
 }

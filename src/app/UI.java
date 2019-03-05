@@ -1,7 +1,11 @@
 package app;
 
 import models.chess.ChessPiece;
+import models.chess.ChessPosition;
 import models.chess.Color;
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 
 public class UI {
@@ -38,6 +42,20 @@ public class UI {
         }
 
         System.out.println("  A B C D E F G H");
+    }
+
+    // Get user input for chess coordinates
+    public static ChessPosition readChessPosition(Scanner sc){
+        try{
+            String inputPos = sc.next();
+            char col = inputPos.charAt(0);
+            int row = Integer.parseInt(inputPos.substring(1));
+
+            return new ChessPosition(col, row);
+        }catch (RuntimeException err){
+            throw new InputMismatchException("Error reading ChessPosition: Valid values are from a1 to h8");
+        }
+
     }
 
     private static void printPiece(ChessPiece piece){

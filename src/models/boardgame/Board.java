@@ -50,6 +50,21 @@ public class Board{
         piece.pos = pos;
     }
 
+    // Used to remove a piece when it's moved
+    public Piece removePiece(Position pos){
+        if(!this.positionExists(pos)){
+            throw new BoardException("Invalid Position");
+        }
+
+        if(piece(pos) == null){ return null;}
+
+        Piece aux = piece(pos);
+        // Removing piece from matrix array
+        pieces[pos.getRow()][pos.getCol()] = null;
+
+        return  aux;
+    }
+
     private boolean positionExists(int row, int col){
         return row >= 0 
         && row < this.rows 

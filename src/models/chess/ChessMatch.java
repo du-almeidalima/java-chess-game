@@ -1,6 +1,7 @@
 package models.chess;
 
 import models.boardgame.Board;
+import models.boardgame.Piece;
 import models.boardgame.Position;
 import models.chess.pieces.King;
 import models.chess.pieces.Rook;
@@ -15,7 +16,7 @@ public class ChessMatch {
     }
 
     // This method needs to downcast the "Piece" to "ChessPiece" because it's getting it from Board.piece: Piece
-    public ChessPiece[][] getChessPiece(){
+    public ChessPiece[][] getChessPieces(){
         ChessPiece[][] mat = new ChessPiece[board.getRows()][board.getRows()];
 
         for (int m = 0; m < board.getCols(); m++) {
@@ -27,11 +28,35 @@ public class ChessMatch {
         return mat;
     }
 
+    public ChessPiece performChessMove(ChessPosition sourcePos, ChessPosition targetPos){
+        Position source = sourcePos.toPosition();
+        Position target = targetPos.toPosition();
+
+        this.validateSourcePosition(source);
+        Piece capturedPiece = this.makeMove(source, target);
+
+        return (ChessPiece) capturedPiece;
+    }
+
     // Method to place a ChessPiece
     private void placeNewPiece(char col, int row, ChessPiece piece){
         board.placePiece(piece, new ChessPosition(col, row).toPosition()); // This will create a new Piece from a ChessPosition, not a Matrix Position for example: "a8" == 0,0
     }
 
+    private void validateSourcePosition(Position source){
+        if(!this.board.thereIsAPiece(source)){
+            throw new ChessException("There is no piece on entered position!");
+        }
+    }
+
+    private Piece makeMove(Position source, Position target){
+        Piece movedPiece = this.board.removePiece(source);
+        Piece capturedPiece = this.board.removePiece(target);
+
+        // With the removed piece out of the matrix, the movedPiece can be assigned to its previous position
+        this.board.placePiece(movedPiece, target);
+        return capturedPiece;
+    }
     // Method to set the pieces
     private void initialSetup(){
         placeNewPiece('c', 1, new Rook(board, Color.WHITE));

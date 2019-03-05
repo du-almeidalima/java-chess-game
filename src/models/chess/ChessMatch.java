@@ -1,6 +1,9 @@
 package models.chess;
 
 import models.boardgame.Board;
+import models.boardgame.Position;
+import models.chess.pieces.King;
+import models.chess.pieces.Rook;
 
 // This is the main class that will connects everything
 public class ChessMatch {
@@ -8,6 +11,7 @@ public class ChessMatch {
 
     public ChessMatch(){
         this.board = new Board(8,8);
+        this.initialSetup();
     }
 
     // This method needs to downcast the "Piece" to "ChessPiece" because it's getting it from Board.piece: Piece
@@ -21,5 +25,12 @@ public class ChessMatch {
         }
 
         return mat;
+    }
+
+    // Method to set the pieces
+    private void initialSetup(){
+        board.placePiece(new Rook(board, Color.WHITE), new Position(2, 1));
+        board.placePiece(new King(board, Color.BLACK), new Position(0, 4));
+        board.placePiece(new King(board, Color.WHITE), new Position(7, 4));
     }
 }

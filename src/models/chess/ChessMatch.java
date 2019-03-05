@@ -27,10 +27,15 @@ public class ChessMatch {
         return mat;
     }
 
+    // Method to place a ChessPiece
+    private void placeNewPiece(char col, int row, ChessPiece piece){
+        board.placePiece(piece, new ChessPosition(col, row).toPosition()); // This will create a new Piece from a ChessPosition, not a Matrix Position for example: "a8" == 0,0
+    }
+
     // Method to set the pieces
     private void initialSetup(){
-        board.placePiece(new Rook(board, Color.WHITE), new Position(2, 1));
-        board.placePiece(new King(board, Color.BLACK), new Position(0, 4));
-        board.placePiece(new King(board, Color.WHITE), new Position(7, 4));
+        this.placeNewPiece('b', 6, new Rook(this.board, Color.WHITE));
+        this.placeNewPiece('e', 8, new King(this.board, Color.BLACK));
+        this.placeNewPiece('e', 1, new King(this.board, Color.WHITE));
     }
 }

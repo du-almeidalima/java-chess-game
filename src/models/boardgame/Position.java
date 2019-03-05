@@ -28,6 +28,6 @@ public class Position{
     // toString
     @Override
     public String toString() {
-        return "Row: " + this.getCol() + " | Col: " + this.getCol();
+        return "Row: " + this.getRow() + " | Col: " + this.getCol();
     }
 }

@@ -6,6 +6,10 @@ public class Board{
     private Piece[][] pieces;
 
     public Board(int rows, int cols){
+        // Defining rules
+        if(rows < 1 && cols < 1){
+            throw new BoardException("Error creating board: board size must be greater than 1 row and 1 column");
+        }
         this.rows = rows;
         this.cols = cols;
 
@@ -21,26 +25,46 @@ public class Board{
         return rows;
     }
 
-
-    public void setCols(Integer cols) {
-        this.cols = cols;
-    }
-    public void setRows(Integer rows) {
-        this.rows = rows;
-    }
-
     // Methods 
-
     public Piece piece(int row, int col){
+        // Checking if this position exists in the board
+        if(! positionExists(row, col)){
+            throw new BoardException("Invalid position");
+        }
         return this.pieces[row][col];
     }
     public Piece piece(Position pos){
-        return this.pieces[pos.getCol()][pos.getRow()];
+        if(! positionExists(pos)){
+            throw new BoardException("Invalid position");
+        }
+        return this.pieces[pos.getRow()][pos.getCol()];
     }
     
     // Change piece position in board
-    public void placePiece(Piece piece, Position position){
-        this.pieces[position.getRow()][position.getCol()] = piece;
-        piece.pos = position;
+    public void placePiece(Piece piece, Position pos){
+        // Checking if there is already a piece on this position
+        if(this.thereIsAPiece(pos)){
+            throw new BoardException("There is already a piece on position: " + pos);
+        }
+        this.pieces[pos.getRow()][pos.getCol()] = piece;
+        piece.pos = pos;
+    }
+
+    private boolean positionExists(int row, int col){
+        return row >= 0 
+        && row < this.rows 
+        && col >= 0 
+        && col < this.cols;
+    }
+    private boolean positionExists(Position pos){
+        return positionExists(pos.getRow(), pos.getCol());
+    }
+
+    public boolean thereIsAPiece(Position pos){
+        if(! positionExists(pos)){
+            throw new BoardException("Invalid position");
+        }
+        // Using the above method "piece" to return piece position information
+        return piece(pos) != null;
     }
 }

@@ -53,6 +53,8 @@ public class ChessMatch {
         Piece movedPiece = this.board.removePiece(source);
         Piece capturedPiece = this.board.removePiece(target);
 
+        // Checking if there's a allied piece
+
         // With the removed piece out of the matrix, the movedPiece can be assigned to its previous position
         this.board.placePiece(movedPiece, target);
         return capturedPiece;

@@ -3,7 +3,9 @@ package models.chess;
 import models.boardgame.Board;
 import models.boardgame.Piece;
 
-public class ChessPiece extends Piece{
+// This class needs to be abstract due to its superClass
+// The implementation will occur on /pieces
+public abstract class ChessPiece extends Piece{
     private Color color;
 
     public ChessPiece(Board board, Color color){

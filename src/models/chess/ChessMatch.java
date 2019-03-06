@@ -43,9 +43,13 @@ public class ChessMatch {
         board.placePiece(piece, new ChessPosition(col, row).toPosition()); // This will create a new Piece from a ChessPosition, not a Matrix Position for example: "a8" == 0,0
     }
 
+    // Will check if there is a piece in the specified position and if the piece can move
     private void validateSourcePosition(Position source){
         if(!this.board.thereIsAPiece(source)){
             throw new ChessException("There is no piece on entered position!");
+        }
+        if(!board.piece(source).isThereAnyPossibleMoves()){
+            throw new  ChessException("There is no possible move for the chosen piece");
         }
     }
 

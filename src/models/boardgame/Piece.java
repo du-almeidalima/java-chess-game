@@ -19,7 +19,7 @@ public abstract class Piece{
 
     // This is a hook method
     // which means, it's a concrete method calling a abstract method, it will call the subclass possibleMoves method
-    public boolean PossibleMove(Position pos){
+    public boolean possibleMove(Position pos){
         // This method will take the possibles moves from the piece, then, the position desired
         // And then check if that position is true
         return this.possibleMoves()[pos.getRow()][pos.getCol()];
@@ -31,7 +31,9 @@ public abstract class Piece{
 
         for(short m = 0; m < auxMatrix.length; m++){
             for(short n = 0; n < auxMatrix.length; n++){
-                return auxMatrix[m][n];
+                if(auxMatrix[m][n]){
+                    return auxMatrix[m][n];
+                }
             }
         }
 

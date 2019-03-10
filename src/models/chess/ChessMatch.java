@@ -32,6 +32,7 @@ public class ChessMatch {
         Position source = sourcePos.toPosition();
         Position target = targetPos.toPosition();
 
+        this.validateTargetPosition(source, target);
         this.validateSourcePosition(source);
         Piece capturedPiece = this.makeMove(source, target);
 
@@ -50,6 +51,17 @@ public class ChessMatch {
         }
         if(!board.piece(source).isThereAnyPossibleMoves()){
             throw new  ChessException("There is no possible move for the chosen piece");
+        }
+    }
+
+    // Will validate the target position based on source's position, for example, which piece is moving
+    // Because each piece has a different moving pattern
+    // This function will check if the target position is inside a possibleMoves() matrix
+    private void validateTargetPosition(Position source, Position target){
+        // This will look at the board matrix find what type of piece we're selecting, and then call possibleMove
+        // Which will call possiblesMoves that will check all the moves this piece can perform in a given board
+        if (!this.board.piece(source).possibleMove(target)){
+            throw new ChessException("The chosen piece cannot move to the specified position");
         }
     }
 

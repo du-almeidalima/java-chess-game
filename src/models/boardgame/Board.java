@@ -71,7 +71,7 @@ public class Board{
         && col >= 0 
         && col < this.cols;
     }
-    private boolean positionExists(Position pos){
+    public boolean positionExists(Position pos){
         return positionExists(pos.getRow(), pos.getCol());
     }
 

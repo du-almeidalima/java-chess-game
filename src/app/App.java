@@ -18,11 +18,18 @@ public class App {
 
         while (true){
             try{
+                // Try variables
+                boolean[][] possibleMoves;
                 UI.clearScreen();
                 UI.printBoard(match.getChessPieces());
+
                 System.out.println();
                 System.out.print("Source: ");
                 source = UI.readChessPosition(sc);
+                // Displaying possible moves
+                possibleMoves = match.possibleMoves(source);
+                UI.clearScreen();
+                UI.printBoard(match.getChessPieces(), possibleMoves); //Overloaded method
 
                 System.out.print("Target: ");
                 target = UI.readChessPosition(sc);

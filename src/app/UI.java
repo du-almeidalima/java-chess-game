@@ -36,7 +36,19 @@ public class UI {
         for (int m = 0; m < pieces.length; m++) {
             System.out.print((8 - m) + " ");
             for (int n = 0; n < pieces.length; n++) {
-                UI.printPiece(pieces[m][n]);
+                UI.printPiece(pieces[m][n], false);
+            }
+            System.out.println();
+        }
+
+        System.out.println("  A B C D E F G H");
+    }
+    // Overloaded method to print possibles moves
+    public static void printBoard(ChessPiece[][] pieces, boolean[][] possibleMoves){
+        for (int m = 0; m < pieces.length; m++) {
+            System.out.print((8 - m) + " ");
+            for (int n = 0; n < pieces.length; n++) {
+                UI.printPiece(pieces[m][n], possibleMoves[m][n]);
             }
             System.out.println();
         }
@@ -58,9 +70,15 @@ public class UI {
 
     }
 
-    private static void printPiece(ChessPiece piece){
+    private static void printPiece(ChessPiece piece, boolean possibleMove){
+        // Checking if there's a piece possible move in this position
+        if (possibleMove){
+            System.out.print(ANSI_BLUE_BACKGROUND);
+        }else{
+
+        }
         if (piece == null) {
-            System.out.print("-");
+            System.out.print("-"  + ANSI_RESET);
         } else {
             if(piece.getColor() == Color.BLACK){
                 System.out.print(ANSI_WHITE + piece + ANSI_RESET);

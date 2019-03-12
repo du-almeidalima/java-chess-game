@@ -8,12 +8,26 @@ import models.chess.pieces.Rook;
 
 // This is the main class that will connects everything
 public class ChessMatch {
+    private int turn;
+    private Color currentPlayer;
     private Board board;
 
     public ChessMatch(){
+        this.turn = 1; // Setting to white start
+        this.currentPlayer = Color.WHITE;
         this.board = new Board(8,8);
         this.initialSetup();
     }
+
+    // Getters and Setters
+    public int getTurn() {
+        return turn;
+    }
+
+    public Color getCurrentPlayer() {
+        return currentPlayer;
+    }
+
 
     // This method needs to downcast the "Piece" to "ChessPiece" because it's getting it from Board.piece: Piece
     public ChessPiece[][] getChessPieces(){
@@ -44,6 +58,8 @@ public class ChessMatch {
         this.validateSourcePosition(source);
         Piece capturedPiece = this.makeMove(source, target);
 
+        this.nextTurn();
+
         return (ChessPiece) capturedPiece;
     }
 
@@ -56,6 +72,11 @@ public class ChessMatch {
     private void validateSourcePosition(Position source){
         if(!this.board.thereIsAPiece(source)){
             throw new ChessException("There is no piece on entered position!");
+        }
+        // Checking if player is moving its own pieces
+        // Note: The class Piece returned from "this.board.piece" doesn't has the getColor method, so we need to upcast it to a ChessPiece
+        if(this.currentPlayer != ((ChessPiece) this.board.piece(source)).getColor()){
+            throw new ChessException("You cannot move a " + ((ChessPiece) this.board.piece(source)).getColor() + " piece");
         }
         if(!board.piece(source).isThereAnyPossibleMoves()){
             throw new  ChessException("There is no possible move for the chosen piece");
@@ -82,6 +103,11 @@ public class ChessMatch {
         // With the removed piece out of the matrix, the movedPiece can be assigned to its previous position
         this.board.placePiece(movedPiece, target);
         return capturedPiece;
+    }
+
+    private void nextTurn(){
+        this.turn++;
+        this.currentPlayer = (this.currentPlayer == Color.WHITE) ? Color.BLACK : Color.WHITE;
     }
     // Method to set the pieces
     private void initialSetup(){

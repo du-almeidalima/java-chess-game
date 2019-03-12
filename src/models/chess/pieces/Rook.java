@@ -31,7 +31,7 @@ public final class Rook extends ChessPiece{
         }
         // Checking if there is a opponent piece
         if(board.positionExists(auxPos) && this.isThereOpponentPiece(auxPos)){
-            mat[pos.getRow()][pos.getCol()] = true;
+            mat[auxPos.getRow()][auxPos.getCol()] = true;
         }
 
         // --------- CHECKING LEFT MOVEMENTS ----------

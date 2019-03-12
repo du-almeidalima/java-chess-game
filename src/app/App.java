@@ -21,7 +21,7 @@ public class App {
                 // Try variables
                 boolean[][] possibleMoves;
                 UI.clearScreen();
-                UI.printBoard(match.getChessPieces());
+                UI.printMatch(match);
 
                 System.out.println();
                 System.out.print("Source: ");

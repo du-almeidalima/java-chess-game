@@ -1,5 +1,6 @@
 package app;
 
+import models.chess.ChessMatch;
 import models.chess.ChessPiece;
 import models.chess.ChessPosition;
 import models.chess.Color;
@@ -19,7 +20,8 @@ public class UI {
 	private static final String ANSI_YELLOW = "\u001B[33m";
 	private static final String ANSI_BLUE = "\u001B[34m";
 	private static final String ANSI_PURPLE = "\u001B[35m";
-	private static final String ANSI_WHITE = "\u001B[37m";	public static final String ANSI_CYAN = "\u001B[36m";
+	private static final String ANSI_WHITE = "\u001B[37m";
+	public static final String ANSI_CYAN = "\u001B[36m";
 
 
     private static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
@@ -32,6 +34,13 @@ public class UI {
     private static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
     
     // Methods
+    public static void printMatch(ChessMatch match){
+        UI.printBoard(match.getChessPieces());
+        System.out.println();
+        System.out.println("Turn : " + match.getTurn());
+        System.out.println("Waiting for player " + match.getCurrentPlayer() + " move...");
+    }
+
     public static void printBoard(ChessPiece[][] pieces){
         for (int m = 0; m < pieces.length; m++) {
             System.out.print((8 - m) + " ");

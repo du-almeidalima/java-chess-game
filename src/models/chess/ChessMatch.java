@@ -6,11 +6,18 @@ import models.boardgame.Position;
 import models.chess.pieces.King;
 import models.chess.pieces.Rook;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // This is the main class that will connects everything
 public class ChessMatch {
     private int turn;
     private Color currentPlayer;
     private Board board;
+
+    // Implementation to create a piece control
+    private List<Piece> piecesOnTheBoard = new ArrayList<>();
+    private List<Piece> capturedPieces= new ArrayList<>();
 
     public ChessMatch(){
         this.turn = 1; // Setting to white start
@@ -65,6 +72,8 @@ public class ChessMatch {
 
     // Method to place a ChessPiece
     private void placeNewPiece(char col, int row, ChessPiece piece){
+        this.piecesOnTheBoard.add(piece);
+
         board.placePiece(piece, new ChessPosition(col, row).toPosition()); // This will create a new Piece from a ChessPosition, not a Matrix Position for example: "a8" == 0,0
     }
 
@@ -98,10 +107,14 @@ public class ChessMatch {
         Piece movedPiece = this.board.removePiece(source);
         Piece capturedPiece = this.board.removePiece(target);
 
-        // Checking if there's a allied piece
-
         // With the removed piece out of the matrix, the movedPiece can be assigned to its previous position
         this.board.placePiece(movedPiece, target);
+
+        if(capturedPiece != null){
+            this.piecesOnTheBoard.remove(capturedPiece);
+            this.capturedPieces.add(capturedPiece);
+        }
+
         return capturedPiece;
     }
 

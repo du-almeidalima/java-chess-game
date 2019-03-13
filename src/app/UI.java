@@ -5,8 +5,11 @@ import models.chess.ChessPiece;
 import models.chess.ChessPosition;
 import models.chess.Color;
 
+import java.util.Arrays;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 
 public class UI {
@@ -34,10 +37,12 @@ public class UI {
     private static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
     
     // Methods
-    public static void printMatch(ChessMatch match){
+    public static void printMatch(ChessMatch match, List<ChessPiece> capturedPieces){
         UI.printBoard(match.getChessPieces());
         System.out.println();
         System.out.println("Turn : " + match.getTurn());
+        System.out.println();
+        printCapturedPieces(capturedPieces);
         System.out.println("Waiting for player " + match.getCurrentPlayer() + " move...");
     }
 
@@ -97,6 +102,30 @@ public class UI {
         }
 
         System.out.print(" ");
+    }
+
+    public static void printCapturedPieces(List<ChessPiece> capturedPieces){
+        List<ChessPiece> white = capturedPieces.stream().filter(
+                piece -> piece.getColor() == Color.WHITE
+        ).collect(Collectors.toList());
+
+        List<ChessPiece> black = capturedPieces.stream().filter(
+                piece -> piece.getColor() == Color.BLACK
+        ).collect(Collectors.toList());
+
+        System.out.println("Captured Pieces: ");
+
+        System.out.print("WHITE: ");
+        System.out.print(ANSI_WHITE);
+        System.out.print(Arrays.toString(white.toArray()));
+        System.out.println(ANSI_RESET);
+
+        System.out.print("BLACK: ");
+        System.out.print(ANSI_YELLOW);
+        System.out.print(Arrays.toString(black.toArray()));
+        System.out.println(ANSI_RESET);
+
+        System.out.println();
     }
 
     // https://stackoverflow.com/questions/2979383/java-clear-the-console

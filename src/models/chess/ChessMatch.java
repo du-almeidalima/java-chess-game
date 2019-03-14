@@ -7,13 +7,16 @@ import models.chess.pieces.King;
 import models.chess.pieces.Rook;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 // This is the main class that will connects everything
 public class ChessMatch {
     private int turn;
     private Color currentPlayer;
     private Board board;
+    private boolean check;
 
     // Implementation to create a piece control
     private List<Piece> piecesOnTheBoard = new ArrayList<>();
@@ -28,13 +31,21 @@ public class ChessMatch {
 
     // Getters and Setters
     public int getTurn() {
-        return turn;
+        return this.turn;
     }
 
     public Color getCurrentPlayer() {
-        return currentPlayer;
+        return this.currentPlayer;
     }
 
+    public boolean getCheck(){return this.check;}
+
+    // Methods
+
+    // Get the opponent color in a check situation
+    public Color opponent(Color color){
+        return (color == Color.WHITE) ? Color.BLACK : Color.WHITE;
+    }
 
     // This method needs to downcast the "Piece" to "ChessPiece" because it's getting it from Board.piece: Piece
     public ChessPiece[][] getChessPieces(){
@@ -65,9 +76,31 @@ public class ChessMatch {
         this.validateSourcePosition(source);
         Piece capturedPiece = this.makeMove(source, target);
 
+        // Checking if player put itself in check
+        if (this.testCheck(this.currentPlayer)){
+            undoMove(source, target, capturedPiece);
+            throw new ChessException("Forbiden move: You can't put yourself in check");
+        }
+
+        // Checking if the king from the opponent player is in check
+        this.check = (this.testCheck(this.opponent(this.currentPlayer))) ? true : false;
+
         this.nextTurn();
 
         return (ChessPiece) capturedPiece;
+    }
+
+    // Returning the king piece of a color
+    private ChessPiece getKing(Color color){
+        List<Piece> piecesList = piecesOnTheBoard.stream().filter(
+          piece -> ((ChessPiece) piece).getColor() == color
+        ).collect(Collectors.toList());
+
+        for (Piece piece : piecesList ){
+            if (piece instanceof King) return (ChessPiece) piece;
+        }
+
+        throw new IllegalStateException("Program Error: There is no " + color + "king on the board");
     }
 
     // Method to place a ChessPiece
@@ -75,6 +108,26 @@ public class ChessMatch {
         this.piecesOnTheBoard.add(piece);
 
         board.placePiece(piece, new ChessPosition(col, row).toPosition()); // This will create a new Piece from a ChessPosition, not a Matrix Position for example: "a8" == 0,0
+    }
+
+    // Will take the king's position of the current player(color) and check every opponent piece if they can make a move that reaches the king
+    private boolean testCheck(Color color){
+        Position kingPos = getKing(color).getChessPosition().toPosition();
+
+        List<Piece> opponentPiece = this.piecesOnTheBoard.stream().filter(
+                piece -> ((ChessPiece)piece).getColor() == this.opponent(color)
+        ).collect(Collectors.toList());
+
+        for (Piece piece : opponentPiece){
+            boolean[][] pieceMoves = piece.possibleMoves();
+            // Checking this piece has a move in the king position (check)
+            if (pieceMoves[kingPos.getRow()][kingPos.getCol()]){
+                return true;
+            }
+
+        }
+
+        return false;
     }
 
     // Will check if there is a piece in the specified position and if the piece can move
@@ -100,6 +153,19 @@ public class ChessMatch {
         // Which will call possiblesMoves that will check all the moves this piece can perform in a given board
         if (!this.board.piece(source).possibleMove(target)){
             throw new ChessException("The chosen piece cannot move to the specified position");
+        }
+    }
+
+    // Method in case a forbidden move is made e.g. put yourself in check
+    private void undoMove(Position source, Position target, Piece capturedPiece){
+        // Basically undoing everything that makeMove does
+        Piece returnedPiece = this.board.removePiece(target);
+        this.board.placePiece(returnedPiece, source);
+
+        if (capturedPiece != null){
+            this.board.placePiece(capturedPiece, target);
+            this.capturedPieces.remove(capturedPiece);
+            this.piecesOnTheBoard.add(capturedPiece);
         }
     }
 

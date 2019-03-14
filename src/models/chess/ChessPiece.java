@@ -20,6 +20,10 @@ public abstract class ChessPiece extends Piece{
     }
 
     // Methods
+    // Get a ChessPosition based on a Board Position
+    public ChessPosition getChessPosition(){
+        return ChessPosition.fromPosition(this.pos);
+    }
     // This method will tell if there is a opponent piece in the way
     protected boolean isThereOpponentPiece(Position pos){
         ChessPiece piece = (ChessPiece) getBoard().piece(pos);

@@ -44,6 +44,11 @@ public class UI {
         System.out.println();
         printCapturedPieces(capturedPieces);
         System.out.println("Waiting for player " + match.getCurrentPlayer() + " move...");
+        if (match.getCheck()){
+            System.out.print(ANSI_RED);
+            System.out.print("CHECK!");
+            System.out.println(ANSI_RESET);
+        }
     }
 
     public static void printBoard(ChessPiece[][] pieces){

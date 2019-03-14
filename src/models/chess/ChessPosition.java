@@ -38,9 +38,9 @@ public class ChessPosition {
         return new Position(8 - getRow(), getCol() - 'a');
     }
 
-    // This method does the oposit of toPosition()
+    // This method does the opposite of toPosition()
     protected static ChessPosition fromPosition(Position pos){
-        return new ChessPosition((char) ('a' - pos.getCol()),  8 - pos.getRow());
+        return new ChessPosition((char) ('a' + pos.getCol()),  8 - pos.getRow());
     }
 
     @Override

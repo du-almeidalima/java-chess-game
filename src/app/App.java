@@ -19,7 +19,7 @@ public class App {
         ChessPosition source, target;
         List<ChessPiece> capturedPieces = new ArrayList<>();
 
-        while (true){
+        while (!match.getCheckMate()){
             try{
                 // Try variables
                 boolean[][] possibleMoves;
@@ -52,5 +52,7 @@ public class App {
             }
         }
 
+        UI.clearScreen();
+        UI.printMatch(match, capturedPieces);
     }
 }

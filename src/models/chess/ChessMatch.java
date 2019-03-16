@@ -207,7 +207,8 @@ public class ChessMatch {
     // Method in case a forbidden move is made e.g. put yourself in check
     private void undoMove(Position source, Position target, Piece capturedPiece){
         // Basically undoing everything that makeMove does
-        Piece returnedPiece = this.board.removePiece(target);
+        ChessPiece returnedPiece = (ChessPiece)this.board.removePiece(target);
+        returnedPiece.decreaseMoveCount();
         this.board.placePiece(returnedPiece, source);
 
         if (capturedPiece != null){
@@ -218,7 +219,9 @@ public class ChessMatch {
     }
 
     private Piece makeMove(Position source, Position target){
-        Piece movedPiece = this.board.removePiece(source);
+        // Downcasting to ChessPiece so we can access moveCount
+        ChessPiece movedPiece = (ChessPiece)this.board.removePiece(source);
+        movedPiece.increaseMoveCount();
         Piece capturedPiece = this.board.removePiece(target);
 
         // With the removed piece out of the matrix, the movedPiece can be assigned to its previous position

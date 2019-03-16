@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7e34b512-8e18-4dc0-9fc7-e7ebe0dc7ebc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/chess/ChessMatch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/chess/ChessMatch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/chess/ChessPiece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/chess/ChessPiece.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -42,11 +40,17 @@
         <entry file="file://$PROJECT_DIR$/src/models/chess/ChessPiece.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="352">
-              <caret line="24" selection-start-line="24" selection-end-line="24" />
+              <caret line="22" column="31" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#456#457#0" expanded="true" />
                 <element signature="e#484#485#0" expanded="true" />
+                <element signature="e#576#577#0" expanded="true" />
+                <element signature="e#553#554#0" expanded="true" />
+                <element signature="e#572#573#0" expanded="true" />
+                <element signature="e#623#624#0" expanded="true" />
+                <element signature="e#652#653#0" expanded="true" />
+                <element signature="e#598#599#0" expanded="true" />
                 <element signature="e#657#658#0" expanded="true" />
               </folding>
             </state>
@@ -72,8 +76,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/models/chess/ChessMatch.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="98" column="55" selection-start-line="98" selection-start-column="55" selection-end-line="98" selection-end-column="55" />
+            <state relative-caret-position="194">
+              <caret line="210" column="42" selection-start-line="210" selection-start-column="42" selection-end-line="210" selection-end-column="42" />
               <folding>
                 <element signature="e#1237#1238#0" expanded="true" />
                 <element signature="e#1279#1280#0" expanded="true" />
@@ -158,6 +162,7 @@
     <findStrings>
       <find>perf</find>
       <find>next</find>
+      <find>makeMove</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -172,10 +177,10 @@
         <option value="$PROJECT_DIR$/src/models/boardgame/Piece.java" />
         <option value="$PROJECT_DIR$/src/models/chess/pieces/King.java" />
         <option value="$PROJECT_DIR$/src/models/chess/pieces/Rook.java" />
-        <option value="$PROJECT_DIR$/src/models/chess/ChessPiece.java" />
         <option value="$PROJECT_DIR$/src/models/chess/ChessPosition.java" />
         <option value="$PROJECT_DIR$/src/app/App.java" />
         <option value="$PROJECT_DIR$/src/app/UI.java" />
+        <option value="$PROJECT_DIR$/src/models/chess/ChessPiece.java" />
         <option value="$PROJECT_DIR$/src/models/chess/ChessMatch.java" />
       </list>
     </option>
@@ -194,8 +199,8 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="163" />
-    <option name="y" value="-9" />
+    <option name="x" value="216" />
+    <option name="y" value="115" />
     <option name="width" value="1400" />
     <option name="height" value="880" />
   </component>
@@ -322,7 +327,14 @@
       <option name="project" value="LOCAL" />
       <updated>1551908989117</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Implementing Checkmate logic">
+      <created>1552750239786</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1552750239786</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TodoView">
@@ -338,7 +350,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49814814" visible="true" weight="0.17358893" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49814814" visible="true" weight="0.17358893" />
       <window_info id="Structure" order="1" sideWeight="0.50185186" side_tool="true" weight="0.16719915" />
       <window_info id="Designer" order="2" />
       <window_info id="Learn" order="3" weight="0.32960597" />
@@ -347,12 +359,12 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32850778" />
       <window_info anchor="bottom" x="939" y="248" width="732" height="450" id="Run" order="2" type="WINDOWED" weight="0.344098" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3986637" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3986637" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32850778" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50106496" side_tool="true" weight="0.27505568" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.18485524" />
+      <window_info anchor="bottom" id="Version Control" order="8" visible="true" weight="0.18485524" />
       <window_info anchor="bottom" id="Messages" order="9" sideWeight="0.49946752" weight="0.32739422" />
       <window_info anchor="bottom" x="685" y="289" width="1033" height="538" id="Terminal" order="10" sideWeight="0.49893504" weight="0.27505568" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -442,21 +454,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Handling exceptions and clearing screen" />
-    <option name="LAST_COMMIT_MESSAGE" value="Handling exceptions and clearing screen" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/models/chess/ChessMatch.java</url>
-          <line>147</line>
-          <properties class="models.chess.ChessMatch" method="testCheckMate">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Implementing Checkmate logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implementing Checkmate logic" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -568,19 +567,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/chess/ChessPiece.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="24" selection-start-line="24" selection-end-line="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#456#457#0" expanded="true" />
-            <element signature="e#484#485#0" expanded="true" />
-            <element signature="e#657#658#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/models/chess/ChessPosition.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="223">
@@ -646,10 +632,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/models/chess/ChessPiece.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="22" column="31" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="31" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#456#457#0" expanded="true" />
+            <element signature="e#484#485#0" expanded="true" />
+            <element signature="e#576#577#0" expanded="true" />
+            <element signature="e#553#554#0" expanded="true" />
+            <element signature="e#572#573#0" expanded="true" />
+            <element signature="e#623#624#0" expanded="true" />
+            <element signature="e#652#653#0" expanded="true" />
+            <element signature="e#598#599#0" expanded="true" />
+            <element signature="e#657#658#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/models/chess/ChessMatch.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="98" column="55" selection-start-line="98" selection-start-column="55" selection-end-line="98" selection-end-column="55" />
+        <state relative-caret-position="194">
+          <caret line="210" column="42" selection-start-line="210" selection-start-column="42" selection-end-line="210" selection-end-column="42" />
           <folding>
             <element signature="e#1237#1238#0" expanded="true" />
             <element signature="e#1279#1280#0" expanded="true" />

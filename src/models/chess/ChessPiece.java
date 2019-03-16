@@ -8,6 +8,7 @@ import models.boardgame.Position;
 // The implementation will occur on /pieces
 public abstract class ChessPiece extends Piece{
     private Color color;
+    private int moveCount;
 
     public ChessPiece(Board board, Color color){
         super(board);
@@ -17,6 +18,18 @@ public abstract class ChessPiece extends Piece{
     // Getters and Setters
     public Color getColor() {
         return color;
+    }
+
+    public int getMoveCount() {
+        return moveCount;
+    }
+
+    public void increaseMoveCount(){
+        this.moveCount++;
+    }
+
+    public void decreaseMoveCount(){
+        this.moveCount--;
     }
 
     // Methods

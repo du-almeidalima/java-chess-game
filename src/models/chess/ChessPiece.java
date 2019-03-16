@@ -37,6 +37,7 @@ public abstract class ChessPiece extends Piece{
     public ChessPosition getChessPosition(){
         return ChessPosition.fromPosition(this.pos);
     }
+
     // This method will tell if there is a opponent piece in the way
     protected boolean isThereOpponentPiece(Position pos){
         ChessPiece piece = (ChessPiece) getBoard().piece(pos);

@@ -5,8 +5,7 @@ import models.boardgame.Position;
 import models.chess.ChessPiece;
 import models.chess.Color;
 
-public class Pawn extends ChessPiece {
-
+public final class Pawn extends ChessPiece {
     public Pawn(Board board, Color color){
         super(board, color);
     }

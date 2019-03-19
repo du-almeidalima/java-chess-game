@@ -5,6 +5,7 @@ import models.boardgame.Piece;
 import models.boardgame.Position;
 import models.chess.pieces.*;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,7 +18,8 @@ public class ChessMatch {
     private Board board;
     private boolean check;
     private boolean checkMate;
-    private ChessPiece enPassantVunerable; //Whenever a pawn makes its first double move it gets vulnerable
+    private ChessPiece enPassantVulnerable; //Whenever a pawn makes its first double move it gets vulnerable
+    private ChessPiece promoted;
 
     // Implementation to create a piece control
     private List<Piece> piecesOnTheBoard = new ArrayList<>();
@@ -48,7 +50,11 @@ public class ChessMatch {
     }
 
     public ChessPiece getEnPassantVulnerable() {
-        return enPassantVunerable;
+        return enPassantVulnerable;
+    }
+
+    public ChessPiece getPromoted() {
+        return promoted;
     }
 
     public void setCheckMate(boolean checkMate) {
@@ -101,6 +107,21 @@ public class ChessMatch {
         // enPassant implementation
         ChessPiece movedPiece = (ChessPiece)board.piece(target);
 
+        // SPECIAL MOVE VALIDATION: PROMOTION
+        // Checking if there were a promotion and if it will put opponent in check or remove check
+        this.promoted = null;
+
+        if (movedPiece instanceof Pawn){
+            // Checking if pawn got to the end of board
+            if(((movedPiece.getColor() == Color.WHITE) && (target.getRow() == 0))
+            || ((movedPiece.getColor() == Color.BLACK) && (target.getRow() == 7))){
+
+                this.promoted = (ChessPiece) board.piece(target);
+                this.promoted = this.replacePromotedPiece("Q");
+
+            }
+        }
+
         // Checking if the king from the opponent player is in check
         this.check = (this.testCheck(this.opponent(this.currentPlayer))) ? true : false;
 
@@ -112,14 +133,57 @@ public class ChessMatch {
 
         // SPECIAL MOVE VALIDATION: CHECKING EN PASSANT
         if (movedPiece instanceof Pawn && (target.getRow() == source.getRow() - 2) || (target.getRow() == source.getRow() + 2)){
-            this.enPassantVunerable = movedPiece;
+            this.enPassantVulnerable = movedPiece;
         }
         else {
-            this.enPassantVunerable = null;
+            this.enPassantVulnerable = null;
         }
 
 
         return (ChessPiece) capturedPiece;
+    }
+
+    public ChessPiece replacePromotedPiece(String type){
+        if (this.promoted == null){
+            throw new IllegalStateException("There is no pawn to be promoted!");
+        }
+
+        // Checking if its a valid type
+        if ((!type.equals("B")) && (!type.equals("N")) && (!type.equals("R")) && (!type.equals("Q"))){
+            throw new InvalidParameterException("Invalid type for promotion");
+        }
+
+        // Getting pawn position and removing it from board
+        Position auxPos = promoted.getChessPosition().toPosition();
+        Piece removedPiece = this.board.removePiece(auxPos);
+        this.piecesOnTheBoard.remove(removedPiece);
+
+        // New Piece
+        ChessPiece promotedPiece;
+
+        switch (type){
+            case "B" :
+                promotedPiece = new Bishop(this.board, this.promoted.getColor());
+                break;
+            case "N" :
+                promotedPiece = new Knight(this.board, this.promoted.getColor());
+            break;
+            case "R" :
+                promotedPiece = new Rook(this.board, this.promoted.getColor());
+            break;
+            case "Q" :
+                promotedPiece = new Queen(this.board, this.promoted.getColor());
+            break;
+
+            default:
+                throw new InvalidParameterException("Invalid type for promotion");
+        }
+
+        // Placing new piece into the board
+        this.piecesOnTheBoard.add(promotedPiece);
+        this.board.placePiece(promotedPiece, auxPos);
+
+        return  promotedPiece;
     }
 
     // Returning the king piece of a color
@@ -257,7 +321,7 @@ public class ChessMatch {
         // SPECIAL MOVE VALIDATION: UNDOING EN PASSANT
         if (returnedPiece instanceof Pawn){
             // In order to check if an en passant move were made, it need to check if pawn captured a piece but not on its target position
-            if (source.getCol().equals(target.getCol()) && capturedPiece == this.enPassantVunerable){
+            if (source.getCol().equals(target.getCol()) && capturedPiece == this.enPassantVulnerable){
                 Position pawnPosition;
                 ChessPiece pawn = (ChessPiece) this.board.removePiece(target);
 
@@ -363,7 +427,7 @@ public class ChessMatch {
         placeNewPiece('g', 8, new Knight(board, Color.BLACK));
         placeNewPiece('h', 8, new Rook(board, Color.BLACK));
         placeNewPiece('a', 7, new Pawn(board, Color.BLACK, this));
-        placeNewPiece('b', 4, new Pawn(board, Color.BLACK, this));
+        placeNewPiece('b', 7, new Pawn(board, Color.BLACK, this));
         placeNewPiece('c', 7, new Pawn(board, Color.BLACK, this));
         placeNewPiece('d', 7, new Pawn(board, Color.BLACK, this));
         placeNewPiece('e', 7, new Pawn(board, Color.BLACK, this));

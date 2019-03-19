@@ -43,6 +43,12 @@ public class App {
                     capturedPieces.add(capturedPiece);
                 }
 
+                // Checking if there were a promotion
+                if (match.getPromoted() != null){
+                    System.out.print("Enter piece for promotion (B/N/R/Q): ");
+                    match.replacePromotedPiece(sc.next());
+                }
+
             }catch (ChessException err){
                 System.out.println("Error: " + err.getMessage());
                 sc.next();
